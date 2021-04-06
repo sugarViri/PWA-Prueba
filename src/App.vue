@@ -1,12 +1,24 @@
-<template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<template lang="pug">
+  div(id="app")
+    header-content(id="header")
+    div(class="flex-container")
+      div(class="main")
+        div(class="main-container")
+          router-view
+
 </template>
+
+<script>
+
+import HeaderContent from '@/components/header/HeaderContent'
+
+export default {
+  name: '',
+  components: {
+    HeaderContent
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -16,17 +28,26 @@
   text-align: center;
   color: #2c3e50;
 }
+#header {
+  height: $--header-height;
+}
+.flex-container {
+  display: flex;
+}
+.main {
+  height: calc(100vh - #{sum($--header-height)});
+  flex: 1;
+  flex-basis: auto;
+  box-sizing: border-box;
+  padding-top: 0;
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  overflow: auto;
+  .main-container {
+    margin: 24px;
+    // padding: 24px;
   }
+}
+.main::-webkit-scrollbar {
+  display: none;
 }
 </style>

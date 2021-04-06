@@ -1,0 +1,23 @@
+.subtitle-underlined-separator {
+  border-top: 1px solid $--color-neutral-1;
+}
+
+.spaced-row {
+  margin-bottom: 0.5rem;
+}
+
+.double-spaced-row {
+  margin-bottom: 1rem;
+}
+
+.triple-spaced-row {
+  margin-bottom: 1.5rem;
+}
+
+.label-default {
+  color: $--color-label;
+}
+
+.value-default {
+  color: $--color-black;
+}

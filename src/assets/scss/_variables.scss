@@ -1,0 +1,20 @@
+
+@function sum($items...){
+  $total: 0;
+  @each $item in $items {
+    $total: $total + $item;
+  }
+  @return $total
+};
+
+// color
+$--color-white: #FFF !default;
+$--color-black: #060E14 !default;
+
+$--color-primary: #F9F9FB !default;
+$--color-secundary: #eaf0f5 !default;
+
+$--color-label: #6E767D !default;
+$--color-neutral-1: #D5DCE0 !default;
+
+$--header-height: 64px;

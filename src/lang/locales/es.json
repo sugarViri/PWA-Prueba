@@ -1,0 +1,66 @@
+{
+  "label": "Español",
+  "menu": {
+    "home": "Home",
+    "profiles": "Perfiles",
+    "profilesFavorite": "Perfiles favoritos"
+  },
+  "application": {
+    "generalInformation": "Información General",
+    "totalItemsMessage": "Total: {total}",
+    "success": "Correcto",
+    "loadingText": "Cargando...",
+    "cleanFilters": "Limpiar filtros",
+    "searchAndSelect": "Busca y selecciona",
+    "location": "Localización",
+    "personalInformation": "Información Personal",
+    "detailProfile": "Detalle del perfil",
+    "fields": {
+      "search": "Buscar",
+      "age": "Edad",
+      "nationality": "Nacionalidad",
+      "gender": "Genero",
+      "keyword": "Palabra clave",
+      "name": "Nombre",
+      "username": "Apellidos",
+      "email": "Email",
+      "registrationDate": "Fecha de registro",
+      "dateToBirth": "Fecha de nacimiento",
+      "male": "Masculino",
+      "female": "Femenino",
+      "city": "Ciudad",
+      "street": "Calle",
+      "phoneNumber": "Número de teléfono",
+      "direction": "Direccion"
+    },
+    "buttons": {
+      "see": "Ver",
+      "exportCsv": "Exportar a CSV",
+      "addFavorites": "Añadir a favoritos",
+      "deleteFavorite": "Quitar de favoritos",
+      "cancel": "Cancelar",
+      "accept": "Aceptar",
+      "saveData": "Guardar datos",
+      "editData": "Editar datos"
+    }
+  },
+  "profile": {
+    "editSuccessMessage": "Perfil actualizado correctamente"
+  },
+  "profiles": {
+    "profiles": "Perfiles",
+    "profile": "Perfil",
+    "addToFavorites": "Añadir a favoritos",
+    "removeToFavorites": "Quitar de favoritos",
+    "seeDetail": "Ver el detalle",
+
+    "filter": {
+      "ageLabel": "@:application.fields.age",
+      "agePlaceholder": "@:application.fields.keyword",
+      "nationalityLabel": "@:application.fields.nationality",
+      "nationalityPlaceholder": "@:application.fields.keyword",
+      "genderLabel": "@:application.fields.gender",
+      "genderPlaceholder": "@:application.fields.keyword"
+    }
+  }
+}
