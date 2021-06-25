@@ -1,91 +1,94 @@
-<template lang="pug">
-  div(v-show="hasLoadedPage")
-
-    el-row(
-      type="flex"
-      align="middle")
-      el-col(:span="21")
-        profiles-filter(
-          :filter-disabled="filterDisabled"
-          @change-filter="filterProfiles")
-      el-col(
-        :span="3"
-        class="total-items-message"
-        align="right")
-        div {{ $t( 'application.totalItemsMessage', { total: filteredProfiles.length} )}}
-
-    el-row
-      el-col(:span="24")
-        el-table(
-          :data="showFilteredProfiles"
-          empty-text=" ")
-          el-table-column(
-            prop="email",
-            :label="$t( 'application.fields.email' )",
-            sortable)
-          el-table-column(
-            prop="name",
-            :label="$t( 'application.fields.name' )",
-            :formatter="(row, column, cell) => `${cell.first} ${cell.last}`"
-            sortable)
-          el-table-column(
-            prop="location.country",
-            :label="$t( 'application.fields.nationality' )",
-            sortable)
-          el-table-column(
-            prop="gender",
-            :label="$t( 'application.fields.gender' )",
-            :formatter="getGender"
-            sortable)
-          el-table-column(
-            prop="dob.date",
-            :label="$t( 'application.fields.dateToBirth' )",
-            :formatter="getDate"
-            sortable)
-          el-table-column(
-            prop="registered.date",
-            :label="$t( 'application.fields.registrationDate' )",
-            :formatter="getDate"
-            sortable)
-          el-table-column(
-            class-name="technical-basis-wizard-custom-cell"
-            width="100")
-            template(slot-scope="scope")
-              el-tooltip(
-                effect="dark"
-                :content="$t( 'profiles.seeDetail' )"
-                placement="top")
-                el-button(
-                  icon="el-icon-view"
-                  circle
-                  @click="navigateProfileDetail(scope.row)")
-
-    el-row
-      el-col(
+<template>
+  <div v-show="hasLoadedPage" class="listaGeneral">
+    <el-row>
+      <el-col
         :span="24"
-        align="left"
-        class="pagination")
-        el-pagination(
+        align="right"
+        class="pagination">
+        <el-pagination
           @size-change="handlePageSizeChange"
           @current-change="handlePageActualChange"
           :current-page.sync="paginationPageActual"
-          :page-sizes="[6, 12, 18]"
+          :page-sizes="[5, 10, 20]"
           :page-size="paginationPageSize"
-          layout="sizes, ->, prev, pager, next"
-          :total="paginationItemCount")
-
+          layout="prev, pager, next"
+          :total="paginationItemCount"
+          :pager-count="pagesPager"
+          >
+        </el-pagination>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="24">
+        <el-table
+          :data="showFilteredProfiles"
+          empty-text=" ">
+          <el-table-column
+            prop="gender"
+            :label="$t( 'application.fields.gender' )"
+            :formatter="getGender"
+            :min-width="100"
+          ></el-table-column>
+          <el-table-column
+            prop="name"
+            :label="$t( 'application.fields.name' )"
+            :formatter="(row, column, cell) => `${cell.first} ${cell.last}`"
+            :min-width="140"
+          ></el-table-column>
+          <el-table-column
+            prop="email"
+            :label="$t( 'application.fields.email' )"
+            :min-width="140"
+          ></el-table-column>
+          <el-table-column
+            prop="location.country"
+            :label="$t( 'application.fields.nationality' )"
+            :min-width="120"
+          ></el-table-column>
+          <el-table-column
+            prop="dob.date"
+            :label="$t( 'application.fields.dateToBirth' )"
+            :formatter="getDate"
+            :min-width="110"
+          ></el-table-column>
+          <el-table-column
+            prop="registered.date"
+            :label="$t( 'application.fields.registrationDate' )"
+            :formatter="getDate"
+            :min-width="100"
+          ></el-table-column>
+          <el-table-column
+            class-name="technical-basis-wizard-custom-cell"
+            width="100"
+            >
+            <template slot-scope="scope">
+              <el-tooltip
+                effect="dark"
+                :content="$t( 'profiles.seeDetail' )"
+                placement="top">
+                <el-button
+                  icon="el-icon-view"
+                  circle
+                  @click="navigateProfileDetail(scope.row)">
+                </el-button>
+              </el-tooltip>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-col>
+    </el-row>
+  <perfiles-filtro :filter-disabled="filterDisabled" @change-filter="filterProfiles" />
+ </div>
 </template>
 
 <script>
-
-import ProfilesFilter from '@/views/profiles/components/ProfilesFilter'
-
+import PerfilesFiltro from '@/views/profiles/components/PerfilesFiltro'
 import { getAllProfiles } from '@/api/profilesApi.js'
 
 export default {
-  name: 'ProfilesList',
+  name: 'PerfilesListaGeneral',
   components: {
-    ProfilesFilter
+    PerfilesFiltro
   },
   data () {
     return {
@@ -93,13 +96,18 @@ export default {
       filteredProfiles: [],
       hasLoadedPage: false,
       filterDisabled: true,
-
       showFilteredProfiles: [],
       paginationPageSize: parseInt(process.env.VUE_APP_PAGINATION_PAGE_SIZE),
       paginationPageActual: parseInt(process.env.VUE_APP_PAGINATION_PAGE_ACTUAL),
       paginationItemStart: parseInt(process.env.VUE_APP_PAGINATION_ITEM_START),
       paginationItemEnd: parseInt(process.env.VUE_APP_PAGINATION_ITEM_END),
       paginationItemCount: 0
+    }
+  },
+  computed: {
+    pagesPager () {
+      const value = Number('3')
+      return value
     }
   },
   methods: {
@@ -148,7 +156,7 @@ export default {
     },
     async fetchInitialData () {
       if (!this.profiles.length) {
-        await getAllProfiles(500)
+        await getAllProfiles(200)
           .then(({ data }) => {
             this.profiles = data.results.filter(item => item.id.value !== null).slice(0, 100) || []
             localStorage.setItem('listOfProfiles', JSON.stringify(this.profiles))
@@ -180,7 +188,19 @@ export default {
 </script>
 
 <style lang="scss">
-.pagination {
-  margin-top: 10px;
+.listaGeneral {
+  .el-table th {
+    background-color: #b3e19d;
+    padding-left: 1rem;
+    color: #303030;
+  }
+  .el-table__body-wrapper {
+    padding-left: 1rem;
+  }
+
+  .pagination {
+    margin-bottom: 10px;
+  }
 }
+
 </style>
